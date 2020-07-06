@@ -1,0 +1,19 @@
+{
+  "name": "@heldersrvio/imageslider",
+  "version": "1.0.0",
+  "description": "A Javascript image slider for use in external projects",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/heldersrvio/ImageSlider.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/heldersrvio/ImageSlider/issues"
+  },
+  "homepage": "https://github.com/heldersrvio/ImageSlider#readme"
+}
