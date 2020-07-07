@@ -29,6 +29,7 @@ export default function newImageSlider(doc, frameId, sliderId, frameWidth, frame
             width: ${frameWidth * getChildNodes(slider).length}px;
             height: ${frameHeight}px;
             display: flex;
+            transition: transform 0.5s ease-in-out;
         `;
     }
 
@@ -115,6 +116,24 @@ export default function newImageSlider(doc, frameId, sliderId, frameWidth, frame
         frame.insertBefore(navigation, frame.firstChild);
     }
 
+    function goForward () {
+        if (currentImage === 2) {
+            return;
+        }
+        slider.style.transform = `translate(-${(currentImage + 1) * frameWidth}px)`;
+        currentImage += 1;
+        updateNavigation();
+    }
+
+    function goBackward () {
+        if (currentImage === 0) {
+            return;
+        }
+        slider.style.transform = `translate(-${(currentImage - 1) * frameWidth}px)`;
+        currentImage -= 1;
+        updateNavigation();
+    }
+
     function createArrowButton() {
         const buttonRight = doc.createElement('button');
         buttonRight.textContent = '>';
@@ -132,14 +151,7 @@ export default function newImageSlider(doc, frameId, sliderId, frameWidth, frame
             font-size: ${frameWidth / 22}px;
         `;
         
-        buttonRight.addEventListener('click', () => {
-            if (currentImage === 2) {
-                return;
-            }
-            slider.style.transform = `translate(-${(currentImage + 1) * frameWidth}px)`;
-            currentImage += 1;
-            updateNavigation();
-        });
+        buttonRight.addEventListener('click', goForward);
         frame.insertBefore(buttonRight, frame.firstChild);
 
         const buttonLeft = doc.createElement('button');
@@ -158,19 +170,17 @@ export default function newImageSlider(doc, frameId, sliderId, frameWidth, frame
             font-size: ${frameWidth / 22}px;
         `;
         
-        buttonLeft.addEventListener('click', () => {
-            if (currentImage === 0) {
-                return;
-            }
-            slider.style.transform = `translate(-${(currentImage - 1) * frameWidth}px)`;
-            currentImage -= 1;
-            updateNavigation();
-        });
+        buttonLeft.addEventListener('click', goBackward);
         frame.insertBefore(buttonLeft, frame.firstChild);
+    }
+
+    function slideEveryFiveSeconds() {
+        setInterval(goForward, 5000);
     }
 
     setStyles();
     createArrowButton();
     createNavigation();
     updateNavigation();
+    slideEveryFiveSeconds();
 }
